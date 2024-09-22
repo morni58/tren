@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Программы тренировок для позвоночника</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .program-choice {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .program-card {
+            width: 40%;
+            padding: 20px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .program-card:hover {
+            background-color: #45a049;
+        }
+
+        .program-description {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .exercise {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .exercise h3 {
+            margin: 0;
+        }
+
+        .passive-actions {
+            margin-top: 20px;
+        }
+
+        .passive-action {
+            padding: 10px;
+            background-color: #e0f7fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .button-back {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button-back:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Программы тренировок для восстановления позвоночника</h1>
+    </header>
+    <main>
+        <!-- Блок выбора программы -->
+        <div id="program-selection" class="program-choice">
+            <div class="program-card" onclick="selectProgram(1)">
+                <h2>Программа 1</h2>
+                <p>Укрепление и растяжка</p>
+            </div>
+            <div class="program-card" onclick="selectProgram(2)">
+                <h2>Программа 2</h2>
+                <p>Функциональная тренировка</p>
+            </div>
+        </div>
+
+        <!-- Описание программы и упражнения -->
+        <div id="program-description" class="program-description">
+            <a class="button-back" onclick="showSelection()">Назад к выбору программ</a>
+            <h2 id="program-title"></h2>
+            <p id="program-goal"></p>
+
+            <h3>Упражнения</h3>
+            <div id="exercise-list"></div>
+
+            <h3>Пассивные действия</h3>
+            <div class="passive-actions">
+                <div id="passive-action-1" class="passive-action"></div>
+                <div id="passive-action-2" class="passive-action"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Данные программ
+        const programs = {
+            1: {
+                title: 'Программа 1: Укрепление и растяжка',
+                goal: 'Укрепление мышечного корсета и улучшение гибкости. Выполняйте упражнения регулярно для улучшения здоровья позвоночника.',
+                exercises: [
+                    {
+                        name: 'Планка на локтях',
+                        description: 'Лягте на живот, затем поднимите тело на локтях и носках, сохраняя прямую линию от головы до пят. Держите позу 30-60 секунд.'
+                    },
+                    {
+                        name: 'Мостик',
+                        description: 'Лягте на спину, согните колени, стопы на ширине плеч. Поднимите бедра, образуя прямую линию от плеч до колен. Выполните 10-15 раз.'
+                    },
+                    {
+                        name: 'Супермен',
+                        description: 'Лягте на живот, вытяните руки вперед. Одновременно поднимите руки и ноги от пола, напрягая спину. Выполните 10-15 раз.'
+                    },
+                    {
+                        name: 'Вытяжение сидя (с прямыми ногами)',
+                        description: 'Сядьте с прямыми ногами, наклонитесь вперед и попытайтесь дотянуться до стоп. Держите позу 30 секунд.'
+                    }
+                ],
+                passiveActions: [
+                    'Растяжка спины в положении сидя: Сидя на полу, скрестите ноги. Наклонитесь в сторону, тяните руку вдоль пола.',
+                    'Расслабление на спине: Лягте на спину, поднимите ноги на стул и лежите 10-15 минут.'
+                ]
+            },
+            2: {
+                title: 'Программа 2: Функциональная тренировка',
+                goal: 'Укрепление и улучшение подвижности. Регулярное выполнение поможет улучшить общую подвижность и снизить болевые ощущения.',
+                exercises: [
+                    {
+                        name: 'Кошка-корова',
+                        description: 'Встаньте на колени и руки. На вдохе прогните спину (поза коровы), на выдохе округлите (поза кошки). Выполните 10-12 раз.'
+                    },
+                    {
+                        name: 'Скручивания (лежа)',
+                        description: 'Лежа на спине, согните колени. Поверните ноги в одну сторону, держа плечи на полу. Повторите по 7-8 раз в каждую сторону.'
+                    },
+                    {
+                        name: 'Сидячие наклоны',
+                        description: 'Сядьте с согнутыми ногами. Наклонитесь к коленям, стараясь дотянуться до стоп. Выполните 10-12 раз.'
+                    },
+                    {
+                        name: 'Подъем на носки',
+                        description: 'Встаньте прямо, поднимитесь на носки и опуститесь. Выполните 15-20 раз.'
+                    }
+                ],
+                passiveActions: [
+                    'Растяжка грудных мышц: Упираясь в стену, отклонитесь назад, чтобы почувствовать растяжение в груди.',
+                    'Растяжка подколенных сухожилий: Сядьте на пол, вытяните одну ногу, другую согните. Наклонитесь к прямой ноге.'
+                ]
+            }
+        };
+
+        // Показать выбор программы
+        function showSelection() {
+            document.getElementById('program-selection').style.display = 'flex';
+            document.getElementById('program-description').style.display = 'none';
+        }
+
+        // Показать выбранную программу
+        function selectProgram(programId) {
+            const program = programs[programId];
+            document.getElementById('program-title').textContent = program.title;
+            document.getElementById('program-goal').textContent = program.goal;
+
+            // Заполнение списка упражнений
+            const exerciseList = document.getElementById('exercise-list');
+            exerciseList.innerHTML = ''; // Очистка перед добавлением
+            program.exercises.forEach(exercise => {
+                const exerciseCard = document.createElement('div');
+                exerciseCard.classList.add('exercise');
+                exerciseCard.innerHTML = `<h3>${exercise.name}</h3><p>${exercise.description}</p>`;
+                exerciseList.appendChild(exerciseCard);
+            });
+
+            // Заполнение пассивных действий
+            document.getElementById('passive-action-1').textContent = program.passiveActions[0];
+            document.getElementById('passive-action-2').textContent = program.passiveActions[1];
+
+            // Показать описание программы и скрыть выбор
+            document.getElementById('program-selection').style.display = 'none';
+            document.getElementById('program-description').style.display = 'block';
+        }
+
+        // Показать выбор программ при загрузке
+        document.addEventListener('DOMContentLoaded', showSelection);
+    </script>
+</body>
+</html>
